@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchLayout">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/searchBar"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -20,7 +20,8 @@
             android:padding="8dp"
             android:layout_weight="5"
             android:background="@android:color/background_light"
-            android:hint="Ex: Banana" />
+            android:hint="@string/ex_banana"
+            android:completionThreshold="1" />
 
         <ImageButton
             android:id="@+id/addButton"

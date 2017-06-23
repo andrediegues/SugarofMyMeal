@@ -2,14 +2,13 @@ package com.example.flints.sugarofmymeal;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static android.provider.BaseColumns._ID;
+import java.util.Locale;
 
-/**
- * Created by flints on 21/06/17.
- */
+import static android.provider.BaseColumns._ID;
 
 public class DataBaseHelper extends SQLiteOpenHelper{
 
@@ -110,6 +109,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
                 COL_ZINC + " TEXT NOT NULL);";
 
         sqLiteDatabase.execSQL(CREATE_SQLITE_DATABASE);
+        sqLiteDatabase.setLocale(new Locale("pt_PT"));
 
     }
 
@@ -166,7 +166,11 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         contentValues.put(COL_FERRO, str[39]);
         contentValues.put(COL_ZINC, str[40]);
 
-        long result = db.insert(TABLE_NAME, null, contentValues);
-        return (result == -1) ? false: true;
+        Cursor cursor = db.rawQuery("SELECT Nome FROM food_data WHERE Nome=?", new String[]{str[0]});
+        long result = 0;
+        if (!cursor.moveToFirst())
+            result = db.insert(TABLE_NAME, null, contentValues);
+        cursor.close();
+        return (result != -1);
     }
 }
