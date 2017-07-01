@@ -30,7 +30,6 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_weight="1"
-            android:onClick="addFoodToList"
             android:src="@android:drawable/ic_menu_add"
             android:padding="8dp"
             tools:background="@android:color/holo_green_light" />
@@ -38,7 +37,7 @@
     </LinearLayout>
 
 
-    <ExpandableListView
+    <ListView
         android:id="@+id/listOfFoods"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,7 +55,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@android:color/holo_green_light"
-        android:text="@string/calculate"
-        android:onClick="calculateMealSugar"/>
+        android:text="@string/calculate"/>
 
 </RelativeLayout>

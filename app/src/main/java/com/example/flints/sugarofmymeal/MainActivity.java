@@ -34,15 +34,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ExpandableListView.OnChildClickListener {
+public class MainActivity extends AppCompatActivity {
 
     DataBaseHelper myDb;
     ImageButton addFoodToList;
     AutoCompleteTextView searchFood;
-    ExpandableListView listOfFood;
+    ListView listOfFood;
     Button calculateSugar;
-    ArrayList<FoodListItem> foodList;
-    ExpandableListAdapter listAdapter;
+    ArrayList<String> foodList;
+    ArrayList<FoodListItem> dataList;
+    ArrayAdapter<String> listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +51,23 @@ public class MainActivity extends AppCompatActivity implements ExpandableListVie
 
         myDb = new DataBaseHelper(this);
         searchFood = (AutoCompleteTextView) findViewById(R.id.searchBar);
-        addFoodToList = (ImageButton) findViewById(R.id.addButton);
-        listOfFood = (ExpandableListView) findViewById(R.id.listOfFoods);
-        calculateSugar = (Button) findViewById(R.id.calculateButton);
         foodList = new ArrayList<>();
-        listOfFood.setOnChildClickListener(this);
+        dataList = new ArrayList<>();
+        listOfFood = (ListView) findViewById(R.id.listOfFoods);
+        addFoodToList = (ImageButton) findViewById(R.id.addButton);
+        addFoodToList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFoodToList(view);
+            }
+        });
+        calculateSugar = (Button) findViewById(R.id.calculateButton);
+        calculateSugar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calculateMealSugar(view);
+            }
+        });
 
         super.onCreate(savedInstanceState);
         try {
@@ -116,8 +129,6 @@ public class MainActivity extends AppCompatActivity implements ExpandableListVie
                 }
             }
         }
-
-
     }
 
 
@@ -133,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements ExpandableListVie
             Toast.makeText(MainActivity.this, "Selecione um alimento sugerido", Toast.LENGTH_LONG).show();
         } else {
             addItem(cursor, nameToAdd);
-            listAdapter = new ExpandableListAdapter(this, foodList);
+            listAdapter = new ArrayAdapter<String>(this, R.layout.list_item_header, R.id.food_name, foodList);
             listOfFood.setAdapter(listAdapter);
         }
         cursor.close();
@@ -149,7 +160,8 @@ public class MainActivity extends AppCompatActivity implements ExpandableListVie
             }
         }
         item = new FoodListItem(nameToAdd, components);
-        foodList.add(item);
+        foodList.add(nameToAdd);
+        dataList.add(item);
         searchFood.setText("");
     }
 
@@ -158,20 +170,11 @@ public class MainActivity extends AppCompatActivity implements ExpandableListVie
     }
 
     public void removeFromList(View view) {
-        String nameToDelete = listOfFood.getExpandableListAdapter().getGroup(view.getId()).toString();
+        int position = listOfFood.getPositionForView(view);
+        String nameToDelete = foodList.get(position);
         System.out.println(nameToDelete);
-        for (int i = 0; i < foodList.size(); i++) {
-            System.out.println(foodList.get(i).getName());
-            if (listAdapter.getGroup(i).toString().equals(nameToDelete)) {
-                foodList.remove(i);
-                listAdapter.notifyDataSetChanged();
-                return;
-            }
-        }
+        foodList.remove(position);
+        listAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-        return false;
-    }
 }
