@@ -32,11 +32,12 @@ public class CalculateActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         foodList = (ArrayList<FoodListItem>) getIntent().getSerializableExtra("dataList");
+
         float value = 0;
         for (int i = 0; i < foodList.size(); i++){
             value += foodList.get(i).getFloatValueOfCH();
         }
-        String totalResult = Float.toString(value) + " g";
+        String totalResult = String.format("%.2f g", value);
         detailedMealList = (ListView) findViewById(R.id.detailed_meal_list);
         adapter = new CustomAdapter(this, R.layout.list_item_body, foodList);
         detailedMealList.setAdapter(adapter);
@@ -51,5 +52,10 @@ public class CalculateActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }

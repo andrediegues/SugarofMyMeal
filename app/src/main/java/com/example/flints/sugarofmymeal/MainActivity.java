@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         dataList = new ArrayList<>();
         listOfFood = (ListView) findViewById(R.id.listOfFoods);
         addFoodToList = (ImageButton) findViewById(R.id.addButton);
+       // addFoodToList.setColorFilter(Color.argb(255, 255, 255, 255));
         addFoodToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         int position = listOfFood.getPositionForView(view);
         String nameToDelete = foodList.get(position);
         foodList.remove(position);
+        dataList.remove(position);
         listAdapter.notifyDataSetChanged();
     }
 

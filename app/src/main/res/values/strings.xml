@@ -3,4 +3,14 @@
     <string name="calculate">Calcular</string>
     <string name="ex_banana">Ex: Banana</string>
     <string name="source">Fonte: Tabela da Composição de Alimentos. Instituto Nacional de Saúde Dr. Ricardo Jorge, I. P.- INSA. 2006</string>
+    <string name="energia">Energia:</string>
+    <string name="calorias">Calorias:</string>
+    <string name="prote_nas">Proteínas:</string>
+    <string name="l_pidos">Lípidos:</string>
+    <string name="colesterol">Colesterol:</string>
+    <string name="hidratos_de_carbono">Hidratos de Carbono:</string>
+    <string name="sal">Sal:</string>
+    <string name="nota">Nota: Valores estimados para cada 100 g</string>
+    <string name="nova_refei_o">Nova Refeição</string>
+    <string name="total">Total:</string>
 </resources>

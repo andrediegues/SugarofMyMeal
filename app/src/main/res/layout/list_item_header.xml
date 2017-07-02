@@ -2,22 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/food_name"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="9"
-        android:text="Nome" />
+        android:layout_weight="7"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:padding="4dp"
+        android:textColor="@color/colorPrimary"/>
 
     <ImageButton
         android:id="@+id/remove_food"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:src="@android:drawable/ic_delete"
-        android:onClick="removeFromList" />
+        android:src="@android:drawable/btn_dialog"
+        android:onClick="removeFromList"
+        android:background="@color/colorAccent"/>
 
 </LinearLayout>

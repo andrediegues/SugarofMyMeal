@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context="com.example.flints.sugarofmymeal.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchLayout">
+        android:id="@+id/searchLayout"
+        android:layout_margin="8dp">
 
         <AutoCompleteTextView
             android:id="@+id/searchBar"
@@ -18,10 +18,11 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:padding="8dp"
-            android:layout_weight="5"
+            android:layout_weight="7"
             android:background="@android:color/background_light"
             android:hint="@string/ex_banana"
-            android:completionThreshold="1" />
+            android:completionThreshold="1"
+            android:fontFamily="sans-serif-condensed"/>
 
         <ImageButton
             android:id="@+id/addButton"
@@ -31,8 +32,8 @@
             android:layout_alignParentRight="true"
             android:layout_weight="1"
             android:src="@android:drawable/ic_menu_add"
-            android:padding="8dp"
-            tools:background="@android:color/holo_green_light" />
+            android:background="@drawable/buttonshape"
+            android:padding="8dp"/>
 
     </LinearLayout>
 
@@ -45,8 +46,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/calculateButton"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_margin="8dp"/>
+
 
     <Button
         android:id="@+id/calculateButton"
@@ -54,7 +55,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:background="@android:color/holo_green_light"
-        android:text="@string/calculate"/>
+        android:text="@string/calculate"
+        android:layout_margin="8dp"
+        android:fontFamily="sans-serif-condensed"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#000000"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="2"
+        android:textColor="#ffffff"/>
+
 
 </RelativeLayout>
