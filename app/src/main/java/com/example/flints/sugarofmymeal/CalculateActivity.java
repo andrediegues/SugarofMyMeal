@@ -32,7 +32,6 @@ public class CalculateActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         foodList = (ArrayList<FoodListItem>) getIntent().getSerializableExtra("dataList");
-
         float value = 0;
         for (int i = 0; i < foodList.size(); i++){
             value += foodList.get(i).getFloatValueOfCH();

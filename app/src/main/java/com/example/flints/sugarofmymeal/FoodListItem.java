@@ -67,7 +67,6 @@ class FoodListItem implements java.io.Serializable{
     }
 
     public float getFloatValueOfCH() {
-        Scanner in = new Scanner(this.getChValue());
-        return in.nextFloat();
+        return new Float(this.getChValue().replaceAll("[^.0-9]", ""));
     }
 }
