@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         calculateSugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (foodList.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Selecione alimentos antes de fazer o cálculo", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 calculateMealSugar(view);
             }
         });
@@ -91,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursorNames = db.rawQuery("SELECT " + DataBaseHelper.COL_NAME + " FROM " + DataBaseHelper.TABLE_NAME + " ORDER BY 1", new String[]{});
         int nNames = cursorNames.getCount();
         String[] names = new String[nNames];
-        System.out.println(cursorNames.getCount());
         cursorNames.moveToFirst();
         while (!cursorNames.isAfterLast()) {
             if (cursorNames.getString(0) != null) {
@@ -136,10 +139,13 @@ public class MainActivity extends AppCompatActivity {
         String nameToAdd = searchFood.getText().toString();
         if (nameToAdd.isEmpty()) return;
         SQLiteDatabase db = myDb.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT " + DataBaseHelper.COL_GROUP + ", " + DataBaseHelper.COL_CH + ", " + DataBaseHelper.COL_ENERGYC + ", " + DataBaseHelper.COL_ENERGYJ + ", " + DataBaseHelper.COL_LIPIDS + ", " + DataBaseHelper.COL_SAL + ", " + DataBaseHelper.COL_PROT + ", " + DataBaseHelper.COL_COLESTEROL + " FROM " + DataBaseHelper.TABLE_NAME
+        Cursor cursor = db.rawQuery(
+                "SELECT " + DataBaseHelper.COL_GROUP + ", " + DataBaseHelper.COL_CH + ", " + DataBaseHelper.COL_ENERGYC
+                        + ", " + DataBaseHelper.COL_ENERGYJ + ", " + DataBaseHelper.COL_LIPIDS + ", " + DataBaseHelper.COL_SAL
+                        + ", " + DataBaseHelper.COL_PROT + ", " + DataBaseHelper.COL_COLESTEROL
+                        + " FROM " + DataBaseHelper.TABLE_NAME
                         + " WHERE " + DataBaseHelper.COL_NAME + " = ? COLLATE NOCASE ORDER BY 1",
                 new String[]{nameToAdd});
-        //System.out.println(cursor.getCount());
         if (!cursor.moveToFirst()) {
             Toast.makeText(MainActivity.this, "Selecione um alimento sugerido", Toast.LENGTH_LONG).show();
         } else {
@@ -156,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < cursor.getColumnCount(); i++) {
             if (cursor.getString(i) != null) {
                 components[i] = cursor.getString(i);
-                System.out.println(components[i]);
             }
         }
         item = new FoodListItem(nameToAdd, components);
@@ -166,13 +171,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calculateMealSugar(View view) {
-
+        Intent i = new Intent(MainActivity.this, CalculateActivity.class);
+        i.putExtra("dataList", dataList);
+        startActivity(i);
     }
 
     public void removeFromList(View view) {
         int position = listOfFood.getPositionForView(view);
         String nameToDelete = foodList.get(position);
-        System.out.println(nameToDelete);
         foodList.remove(position);
         listAdapter.notifyDataSetChanged();
     }

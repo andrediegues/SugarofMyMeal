@@ -1,10 +1,12 @@
 package com.example.flints.sugarofmymeal;
 
+import java.util.Scanner;
+
 /**
  * Created by flints on 25/06/17.
  */
 
-class FoodListItem {
+class FoodListItem implements java.io.Serializable{
 
     private String name;
     private String group;
@@ -20,9 +22,9 @@ class FoodListItem {
         this.name = nameToAdd;
         this.group = components[0];
         this.chValue = components[1];
-        this.lipidsValue = components[2];
-        this.caloriesValue = components[3];
-        this.energyValue = components[4];
+        this.caloriesValue = components[2];
+        this.energyValue = components[3];
+        this.lipidsValue = components[4];
         this.saltValue = components[5];
         this.proteinValue = components[6];
         this.cholesterolValue = components[7];
@@ -64,43 +66,8 @@ class FoodListItem {
         return cholesterolValue;
     }
 
-    public String get(int i) {
-        switch (i) {
-            case 0:
-                getName();
-                break;
-            case 1:
-                getGroup();
-                break;
-            case 2:
-                getChValue();
-                break;
-            case 3:
-                getLipidsValue();
-                break;
-            case 4:
-                getCaloriesValue();
-                break;
-            case 5:
-                getEnergyValue();
-                break;
-            case 6:
-                getSaltValue();
-                break;
-            case 7:
-                getProteinValue();
-                break;
-            case 8:
-                getCholesterolValue();
-                break;
-            default:
-                return null;
-        }
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return getName();
+    public float getFloatValueOfCH() {
+        Scanner in = new Scanner(this.getChValue());
+        return in.nextFloat();
     }
 }

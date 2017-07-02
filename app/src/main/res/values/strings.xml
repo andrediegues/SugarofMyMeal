@@ -2,4 +2,5 @@
     <string name="app_name">Sugar of My Meal</string>
     <string name="calculate">Calcular</string>
     <string name="ex_banana">Ex: Banana</string>
+    <string name="source">Fonte: Tabela da Composição de Alimentos. Instituto Nacional de Saúde Dr. Ricardo Jorge, I. P.- INSA. 2006</string>
 </resources>
