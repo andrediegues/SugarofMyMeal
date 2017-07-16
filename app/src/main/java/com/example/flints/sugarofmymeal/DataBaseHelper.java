@@ -55,10 +55,9 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         onCreate(sqLiteDatabase);
     }
 
-    public boolean insertData(String[] str){
+    public boolean insertData(String[] str, SQLiteDatabase db){
         if(str.length != 9) return false;
 
-        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_NAME, str[0]);
         contentValues.put(COL_GROUP, str[1]);
@@ -76,5 +75,17 @@ public class DataBaseHelper extends SQLiteOpenHelper{
             result = db.insert(TABLE_NAME, null, contentValues);
         cursor.close();
         return (result != -1);
+    }
+
+    public boolean isDataAlreadyInserted(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM " + TABLE_NAME, new String[] {});
+        if (!cursor.moveToFirst()){
+            return false;
+        }
+        else{
+            int rows = Integer.valueOf(cursor.getString(0));
+            return rows == 1109;
+        }
     }
 }

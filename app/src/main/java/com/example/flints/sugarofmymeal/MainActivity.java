@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         dataList = new ArrayList<>();
         listOfFood = (ListView) findViewById(R.id.listOfFoods);
         addFoodToList = (ImageButton) findViewById(R.id.addButton);
-       // addFoodToList.setColorFilter(Color.argb(255, 255, 255, 255));
         addFoodToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,19 +109,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void importCSVtoSQLiteDB(DataBaseHelper myDb) throws IOException {
+        if (myDb.isDataAlreadyInserted()){
+            return;
+        }
         AssetManager assetManager = getAssets();
         InputStream assetFile = assetManager.open("database/FoodComp.csv");
-
         BufferedReader reader = null;
         try {
+            SQLiteDatabase db = myDb.getWritableDatabase();
             reader = new BufferedReader(new InputStreamReader(assetFile));
             String line;
+            db.beginTransaction();
             while ((line = reader.readLine()) != null) {
                 String[] str = line.split(",");
-                boolean isInserted = myDb.insertData(str);
-                if (!isInserted)
+                boolean isInserted = myDb.insertData(str, db);
+                if (!isInserted) {
                     Toast.makeText(MainActivity.this, "Insertion failed on " + str[0], Toast.LENGTH_LONG).show();
+                    db.endTransaction();
+                    break;
+                }
             }
+            db.setTransactionSuccessful();
+            db.endTransaction();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
